@@ -6,10 +6,14 @@ import LayoutPublic from '@/components/layout/LayoutPublic';
 import LayoutTenent from '@/components/layout/LayoutTenent';
 import '@/styles/colors.css';
 import '@/styles/globals.css';
+import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps<{ session: Session }>) {
   const router = useRouter();
   const { pathname } = router;
   let LayoutComponent = LayoutPublic;
