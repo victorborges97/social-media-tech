@@ -28,11 +28,8 @@ export default NextAuth({
     //   },
     // }),
     GithubProvider({
-      // @ts-ignore
       clientId: process.env.NEXT_PUBLIC_GITHUB_ID,
-      // @ts-ignore
       clientSecret: process.env.NEXT_PUBLIC_GITHUB_SECRET,
-      // @ts-ignore
       scope: 'read:user',
     }),
     // GoogleProvider({
@@ -71,8 +68,9 @@ export default NextAuth({
     // async signIn({ user, account, profile, email, credentials }) { return true },
     // async redirect({ url, baseUrl }) { return baseUrl },
     async session({ session, token, user }) {
-      // @ts-ignore
-      session.user.id = token.sub;
+      if (session.user) {
+        session.user.id = token.sub;
+      }
       console.log({ session, user });
       return session;
     },
@@ -82,7 +80,6 @@ export default NextAuth({
           where: {
             userOnTenant: {
               every: {
-                // @ts-ignore
                 userId: user.id,
               },
             },
@@ -94,11 +91,9 @@ export default NextAuth({
               image: '',
               name: 'Meu tenant',
               plan: 'free',
-              // @ts-ignore
               slug: 'meutenant',
               userOnTenant: {
                 create: {
-                  // @ts-ignore
                   userId: user.id,
                   role: 'owner',
                 },

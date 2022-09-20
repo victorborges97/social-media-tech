@@ -29,7 +29,6 @@ export default async (
     where: {
       userOnTenant: {
         every: {
-          //@ts-ignore
           userId: session.user.id,
         },
       },

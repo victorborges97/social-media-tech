@@ -120,7 +120,9 @@ const Links: React.FC = () => {
                   )}
                   {data &&
                     data.result.length >= 1 &&
-                    data.result.map((link) => <LineLink link={link} />)}
+                    data.result.map((link) => (
+                      <LineLink key={link.slug} link={link} />
+                    ))}
                 </tbody>
               </table>
               <div className='xs:flex-row xs:justify-between flex flex-col items-center bg-white px-5 py-5'>

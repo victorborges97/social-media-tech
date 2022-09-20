@@ -43,7 +43,7 @@ const AppIndex: React.FC = () => {
               {data &&
                 data.length >= 1 &&
                 data.map((tenant) => (
-                  <li>
+                  <li key={tenant.id}>
                     <Link href={`/app/${tenant.id}`}>
                       <a>{tenant.name}</a>
                     </Link>
