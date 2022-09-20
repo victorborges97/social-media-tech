@@ -28,9 +28,8 @@ export default NextAuth({
     //   },
     // }),
     GithubProvider({
-      clientId: process.env.NEXT_PUBLIC_GITHUB_ID,
-      clientSecret: process.env.NEXT_PUBLIC_GITHUB_SECRET,
-      scope: 'read:user',
+      clientId: `${process.env.NEXT_PUBLIC_GITHUB_ID}`,
+      clientSecret: `${process.env.NEXT_PUBLIC_GITHUB_SECRET}`,
     }),
     // GoogleProvider({
     //   clientId: process.env.GOOGLE_ID,
@@ -68,14 +67,13 @@ export default NextAuth({
     // async signIn({ user, account, profile, email, credentials }) { return true },
     // async redirect({ url, baseUrl }) { return baseUrl },
     async session({ session, token, user }) {
-      if (session.user) {
-        session.user.id = token.sub;
+      if (session?.user) {
+        session.user.id = `${token.sub}`;
       }
-      console.log({ session, user });
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      if (isNewUser) {
+      if (isNewUser && user) {
         const accounts = await prisma.tenant.findFirst({
           where: {
             userOnTenant: {
