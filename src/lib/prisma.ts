@@ -1,14 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient as NormalPrisma } from '@prisma/client';
+import { PrismaClient as APIPrisma } from '@prisma/client/edge';
 
-let prisma: PrismaClient;
+let prisma: NormalPrisma;
 
 if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient();
+  prisma = new APIPrisma();
 } else {
-  if (!global.prisma) {
-    global.prisma = new PrismaClient();
-  }
-  prisma = global.prisma;
+  prisma = new NormalPrisma();
 }
 
 export default prisma;
